@@ -18,8 +18,12 @@ if you already have direnv, then simply do
 To scale/add 2 more "webnodes", run `docker-compose scale node=3`
 You can see balanced picked up new nodes via haproxy stats screen http://127.0.0.1:1936, user: stats, pw:stats
 
-### testing
+## 2. solution on AWS
 
+## 3. testing and automation
+
+[test.sh](test.sh) checks for task  requirements and stores/retrieves test data.
+[docker-compose.yml](docker-compose.yml) orchestrates deployment of whole solution.
 ```
 $ ./test.sh 
 
