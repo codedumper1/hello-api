@@ -2,7 +2,7 @@
 Task: design and code simple "Hello world" application that exposes PUT/GET HTTP API for user's birthdate storing and retrieval. For full task description see [tasks.txt](tasks.txt).
 
 **Concept**: since we are sending and receiving json key-values it makes sense to use doc storage such as Mongodb. I chose Node.js as a quick way to implement API solution. Also Node.js is one of supported languages to create serverless apps/lambdas on AWS therefore it suits task context. 
-In code I decided not to use *express*, *jsonbody* or other libraries and go with just Node.js core + mongo lib (as there is no way around it). Since logic is simple I used callbacks and did not exported my functions outside main file to keep all logic visible in place. In real world it is usualy done to create *proper* per function unit tests.
+In code I decided not to use *express*, *jsonbody* or other libraries and go with just Node.js core + mongo lib (as there is no way around it). Since logic is simple I used callbacks and did not exported my functions outside main file to keep all logic visible in place. In real world module exports are usualy done to create *proper* per function unit tests later.
 
 ### architecture and start
 Architecture consists of haproxy balancer->nodejs->mongodb containers. They are build with [docker-compose](docker-compose.yml). It is possible to scale and add more nodejs containers/instances, and balancer in front will split trafic across them. There is *webnetwork* between balancer and nodejs "webnodes" and *dbnetwork* between nodejs and mongo to segregate security scopes and accessability between servers. Preview of possible deployment logic is in node service, but it works with swarm only. Upon setup of mongodb root and webapp passwords are set, also index is set up on *username* for *user* collection. Idea for simplification is that username must be unique to retrieve only 1 record describing particular "person".
@@ -13,7 +13,7 @@ git clone https://github.com/codedumper1/hello-api.git
 cd hello-api
 ```
 if you already have direnv, then simply do 
-`direnv allow` else `source .envrc` and `docker-compose up`. This will bring 3 containers.
+`direnv allow` else `source .envrc` and `docker-compose up`. This will bring 3 containers. Entry point is http://127.0.0.1:8000.
 
 To scale/add 2 more "webnodes", run `docker-compose scale node=3`
 You can see balanced picked up new nodes via haproxy stats screen http://127.0.0.1:1936, user: stats, pw:stats
