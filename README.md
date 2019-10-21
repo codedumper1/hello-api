@@ -20,18 +20,18 @@ You can see balanced picked up new nodes via haproxy stats screen http://127.0.0
 
 ## 2. solution on AWS
 
-**serverless:**
-principal schema: request -> Amazon API gateway -> Amazon Lambda -> Amazon Dynamo DB
+**serverless:**<br>
+principal schema: request -> Amazon API gateway -> Amazon Lambda -> Amazon Dynamo DB<br>
 where
 - API gateway - defines routes/resources and request methods;
 - Lambda - code itself, triggered on event. We reuse functions *processPUT* and *processGET* from out code, add sdk libs, pack to .zip and ship as lambda package;
 - Dynamo DB - key-value DB to store our data.
 
-**EC2 based:**
-principal schema: Elastic Load balancer -> EC2 instance(s) -> Dynamo DB
+**EC2 based:**<br>
+principal schema: Elastic Load balancer -> EC2 instance(s) -> Dynamo DB<br>
 where balancer dispatches requests among EC2 compute instances that use Dynamo DB for key-value storage.
 
-**traditional**
+**traditional**<br>
 EC2 instance per role - i.e. balancer (if any), webnode(s) and nosql server(s).
 
 ## 3. testing and automation
