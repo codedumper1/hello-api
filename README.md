@@ -28,10 +28,10 @@ where
 - Dynamo DB - key-value DB to store our data.
 
 **EC2 based:**<br>
-principal schema: Elastic Load balancer -> EC2 instance(s) -> Dynamo DB<br>
-where balancer dispatches requests among EC2 compute instances that use Dynamo DB for key-value storage.
+principal schema: request -> Elastic Load balancer -> EC2 instance(s) -> Dynamo DB<br>
+where Amazon balancer dispatches requests among EC2 compute instances that use Dynamo DB for key-value storage.
 
-**traditional**<br>
+**traditional:**<br>
 EC2 instance per role - i.e. balancer (if any), webnode(s) and nosql server(s).
 
 ## 3. testing and automation
