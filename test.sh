@@ -13,13 +13,13 @@ echo
 echo -n "Try sending today's date - $DATE_NOW... "
 curl -H "Content-Type: application/json" -X PUT -d "{\"dateOfBirth\":\"${DATE_NOW}\"}" http://localhost:8000/hello/username
 echo 
-echo -n "Storing data for john... "
+echo -n "Storing date 2009-01-01 for john... "
 curl -H "Content-Type: application/json" -X PUT -d '{"dateOfBirth":"2009-01-01"}' http://localhost:8000/hello/john
 echo 
-echo -n "Storing data for michael... "
+echo -n "Storing date 2009-12-01 for michael... "
 curl -H "Content-Type: application/json" -X PUT -d '{"dateOfBirth":"2009-12-01"}' http://localhost:8000/hello/michael
 echo 
-echo -n "Storing data for katie.. "
+echo -n "Storing date ${MONTH_DAY} for katie.. "
 curl -H "Content-Type: application/json" -X PUT -d "{\"dateOfBirth\":\"${MONTH_DAY}\"}" http://localhost:8000/hello/katie
 echo 
 
