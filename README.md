@@ -22,7 +22,7 @@ You can see balanced picked up new nodes via haproxy stats screen http://127.0.0
 
 ## 3. testing and automation
 
-[test.sh](test.sh) checks for task  requirements and stores/retrieves test data.
+[test.sh](test.sh) checks for task  requirements and stores/retrieves test data.<br>
 [docker-compose.yml](docker-compose.yml) orchestrates deployment of whole solution.
 ```
 $ ./test.sh 
