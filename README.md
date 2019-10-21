@@ -1,7 +1,7 @@
 ## 1. The app.
 Task: design and code simple "Hello world" application that exposes PUT/GET HTTP API for user's birthdate storing and retrieval. For full task description see [tasks.txt](tasks.txt).
 
-**Concept**: since we are sending and receiving json key-values it makes sense to use doc storage such as Mongodb. I chose Node.js as a quick way to implement API solution. Also Node.js is one of supported languages to create serverless apps/lambdas on AWS therefore it suits task context. 
+**Concept**: since we are sending and receiving json key-values it makes sense to use doc storage such as Mongodb. I chose Node.js as a quick way to implement [API solution](index.js). Also Node.js is one of supported languages to create serverless apps/lambdas on AWS therefore it suits task context. 
 In code I decided not to use *express*, *jsonbody* or other libraries and go with just Node.js core + mongo lib (as there is no way around it). Since logic is simple I used callbacks and did not exported my functions outside main file to keep all logic visible in place. In real world module exports are usualy done to create *proper* per function unit tests later.
 
 ### architecture and start
