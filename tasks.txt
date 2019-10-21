@@ -1,0 +1,27 @@
+Task 1. Design and code simple "Hello world" application that exposes the following HTTP-based APIs:
+
+a) Saves/updates given user's name and birthdate to database:
+Request: PUT /hello/<username> { "dateOfBirth": "YYYY-MM-DD"}
+Response: 204 No Content
+
+Rules:
+- username must contain only letters;
+- date must be before current date
+
+b) Returns hello birthday message for given user
+Request: GET /hello/<username>
+Response: 200 OK
+
+Response Examples:
+A. if username's birthday is in N days:
+{ "message": "Hello, <username>! Your birthday is in N day(s)" }
+
+B. if username's birthday is today:
+{ "message": "Hello, <username>! Happy birthday!" }
+
+Note: use storage/database of your choice.
+
+Task 2. Produce a system diagram of your solution deployed to either AWS or GCP (it's not required to support both cloud platforms).
+
+Task 3. Write configuration scripts for building and no downtime production deployment of this application, keeping in mind aspects that and SRE would have consider.
+

@@ -1,0 +1,82 @@
+# N.B. if direnv present, then `direnv allow` and proceed to `docker-compose -d up`, 
+# else do `source .envrc` before
+# docker-compose -d up; docker-compose scale node=3; docker ps;
+# Docker engine >=18.06 pls.
+version: "3.3"
+
+services:
+  node:
+    image: "node:8"
+    command: "npm start"
+    restart: on-failure
+    user: "node"
+    working_dir: /home/node/app
+    networks:
+      - webnetwork
+      - dbnetwork
+    expose:
+      - "5000"
+    depends_on:
+      - mongo
+    links:
+      - mongo  
+    volumes:
+      - ./:/home/node/app
+    # deploy works for swarm only. For deployment illustration purposes.
+    deploy:
+      mode: replicated
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+        #order: stop-first
+    environment:
+      HTTP_HOST: "${HTTP_HOST}"
+      HTTP_PORT: "${HTTP_PORT}"
+      MONGO_DBNAME: "${MONGO_DBNAME}"
+      MONGO_COLLECTION: "${MONGO_COLLECTION}"
+      MONGO_USERDB_WEBUSER: "${MONGO_USERDB_WEBUSER}"
+      MONGO_USERDB_WEBPASS: "${MONGO_USERDB_WEBPASS}"
+      MONGO_URL: "${MONGO_URL}"
+      NODE_ENV: "production"
+    healthcheck:
+      test: ["CMD", "curl", "-q", "http://localhost:5000/hello"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+  
+  mongo:
+    image: mongo:4-bionic
+    command: --serviceExecutor adaptive --wiredTigerCacheSizeGB 0.25
+    restart: on-failure
+    networks:
+      - dbnetwork
+    expose:
+      - "27017"
+    volumes:
+      - /tmp/mongo:/data/db
+      - ./initdb:/docker-entrypoint-initdb.d
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${MONGO_INITDB_DATABASE}"
+      MONGO_USERDB_WEBUSER: "${MONGO_USERDB_WEBUSER}"
+      MONGO_USERDB_WEBPASS: "${MONGO_USERDB_WEBPASS}"
+  
+  lbhaproxy:
+    image: dockercloud/haproxy
+    links:
+      - node
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - webnetwork
+    ports:
+      - "8000:80"
+      - "1936:1936"    
+    depends_on:
+      - node
+      - mongo
+networks:
+  webnetwork:
+  dbnetwork:

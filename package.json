@@ -1,0 +1,20 @@
+{
+  "name": "hello-api",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrius Adomaitis",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.3.3"
+  },
+  "engines": {
+    "node": ">= 8.0.0",
+    "npm": ">= 3.0.0"
+  }
+}
